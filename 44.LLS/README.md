@@ -9,4 +9,5 @@
 * Final result
 ![.](Outputs/final.png)
 
-## Boston house price
+# 2.Boston house price
+![Alt text](Outputs/boston.png)
