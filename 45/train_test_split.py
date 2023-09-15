@@ -1,6 +1,6 @@
 import numpy as np
 
-def train_test_split(X, Y, test_size=0.5, shuffle=False):
+def TrainTestSplit(X, Y, test_size=0.5, shuffle=False):
     if len(X) != len(Y):
         raise ValueError('length of X_train and Y_train is not equal.')
 
