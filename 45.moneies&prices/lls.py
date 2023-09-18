@@ -11,7 +11,11 @@ class LLS:
         return self.w
 
     def predict(self, X):
-        return self.w * X
+        try:
+            return self.w * X
+        except:
+            return self.w.T * X
+
 
     def evaluate(self, X_test, Y_test, metric='mae'):
         Y_pred = self.predict(X_test)
@@ -26,4 +30,19 @@ class LLS:
             loss = np.sqrt(np.sum((Y_test - Y_pred)**2) / len(Y_test))
 
         return loss
+
+    def evaluate_outer_model(self, Y_pred, Y_test, metric='mae'):
+        if metric== 'mae':
+            loss = np.sum(np.abs(Y_test - Y_pred)) / len(Y_test)
+
+        elif metric == 'mse':
+            loss = np.sum((Y_test - Y_pred)**2) / len(Y_test)
+
+        elif metric == 'rmse':
+            loss = np.sqrt(np.sum((Y_test - Y_pred)**2) / len(Y_test))
+
+        return loss
+
+
+
         
