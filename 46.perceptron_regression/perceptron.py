@@ -1,6 +1,4 @@
 import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
 
 
 class Perceptron:
@@ -18,15 +16,19 @@ class Perceptron:
                 x = X_train[i]
                 y = Y_train[i]
 
-                y_pred = x @ self.w + self.b
+                y_pred = x * self.w + self.b
                 error = y - y_pred
+
+                loss = np.mean(np.abs(error))
+                
 
                 self.w = self.w + (error * x * self.learning_rate_w)
                 self.b = self.b + (error * self.learning_rate_b)
+            self.losses.append(loss)
 
 
     def predict(self, X_test):
-        Y_pred = X_test @ self.w + self.b
+        Y_pred = X_test * self.w + self.b
 
         return Y_pred
 
@@ -35,19 +37,22 @@ class Perceptron:
         Y_pred = X_test * self.w + self.b
 
         if metric == 'mae':
-            self.losses = np.sum(np.abs(Y_test - Y_pred)) / len(Y_test)
+            loss = np.sum(np.abs(Y_test - Y_pred)) / len(Y_test)
 
 
         elif metric == 'mse':
-            self.losses = np.sum((Y_test - Y_pred)**2) / len(Y_test)
+            loss = np.sum((Y_test - Y_pred)**2) / len(Y_test)
 
         elif metric == 'rmse':
-            self.losses = np.sqrt(np.sum((Y_test - Y_pred)**2) / len(Y_test))
+            loss = np.sqrt(np.sum((Y_test - Y_pred)**2) / len(Y_test))
 
-        return self.losses
+        return loss
 
 
 if  __name__ == '__main__':
+    import pandas as pd
+    from sklearn.model_selection import train_test_split
+
     data = pd.read_csv('Inputs/weight-height.csv')
 
     X = data[['Height']].values
