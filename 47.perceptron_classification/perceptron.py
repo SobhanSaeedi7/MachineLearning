@@ -30,12 +30,12 @@ class Perceptron:
         for epoch in tqdm(range(epochs)):
             for x, y in zip(X_train, Y_train):
                 #forward
-                y_pred = self.activation(x @ self.weights + self.bias)
+                y_pred = self.activation(x * self.weights + self.bias)
                 #back propagation
                 error = y - y_pred
                 #update
-                self.weights += self.learning_rate * error * x
-                self.bias += self.learning_rate * error 
+                self.weights = self.weights - self.learning_rate * error * x
+                self.bias = self.bias - self.learning_rate * error 
             loss_train, accuracy_train = self.evaluate(X_train, Y_train)
             loss_test, accuracy_test = self.evaluate(X_test, Y_test)
 
